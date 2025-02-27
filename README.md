@@ -102,13 +102,7 @@ This will:
 
 ### **Step 4: Verify the Services**
 
-1.  **Spring Boot Application**:
-
-    -   Access the application at `http://localhost:8080`.
-
-    -   Check the logs to ensure the application started successfully.
-
-2.  **RabbitMQ**:
+1.  **RabbitMQ**:
 
     -   Access the RabbitMQ management UI at `http://localhost:15672`.
 
