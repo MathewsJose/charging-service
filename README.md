@@ -39,8 +39,6 @@ This application is designed to handle asynchronous communication between a REST
 
 -   **RabbitMQ**: Message broker for asynchronous communication.
 
--   **H2 Database**: In-memory database for persistence.
-
 -   **Docker**: Containerization for easy deployment and running of the application.
 
 * * * * *
@@ -120,38 +118,46 @@ This will:
 
         -   **Password**: `guest`
 
-3.  **H2 Database**:
-
-    -   Access the H2 console at `http://localhost:8080/h2-console`.
-
-    -   Use the following connection details:
-
-        -   **JDBC URL**: `jdbc:h2:mem:testdb`
-
-        -   **Username**: `sa`
-
-        -   **Password**: `password`
-
 * * * * *
 
-### **Step 5: Test the Application**
+Testing the Application with Postman
+--------------------------------
 
-1.  **Send a Request**:
+Follow these steps to test the `/startChargingSession` endpoint using **Postman**:
 
-    -   Use a tool like **Postman** or **cURL** to send a POST request to the `/startChargingSession` endpoint.
+### Step 1: Install Postman
 
-    **Example Request**:
+If you don't have Postman installed, download and install it from [here](https://www.postman.com/downloads/).
+
+### Step 2: Create a New Request
+
+1.  Open Postman and create a new request.
+
+2.  Set the request method to `POST`.
+
+3.  Enter the URL: `http://localhost:8080/startChargingSession`.
+
+### Step 3: Set the Request Body
+
+1.  Go to the **Body** tab.
+
+2.  Select **raw** and choose **JSON** from the dropdown.
+
+3.  Enter the following JSON payload:
 
     ```
-    curl -X POST http://localhost:8080/startChargingSession\
-         -H "Content-Type: application/json"\
-         -d '{
-               "stationId": "123e4567-e89b-12d3-a456-426614174000",
-               "driverToken": "validDriverToken123",
-               "callbackUrl": "http://example.com/callback"
-             }'
+    {
+      "stationId": "123e4567-e89b-12d3-a456-426614174000",
+      "driverToken": "validDriverToken123",
+      "callbackUrl": "http://example.com/callback"
+    }
     ```
-    **Expected Response**:
+
+### Step 4: Send the Request
+
+1.  Click the **Send** button.
+
+2.  Verify the response in the **Response** section. You should see:
 
     ```
     {
@@ -159,22 +165,6 @@ This will:
       "message": "Request is being processed asynchronously. The result will be sent to the provided callback URL."
     }
     ```
-
-2.  **Check RabbitMQ**:
-
-    -   Go to the RabbitMQ management UI (`http://localhost:15672`).
-
-    -   Verify that a message has been added to the `chargingSessionQueue`.
-
-3.  **Verify Callback**:
-
-    -   Use a tool like **RequestBin** to simulate a callback URL.
-
-    -   Check the callback URL to verify that the result was sent.
-
-4.  **Check Database**:
-
-    -   Access the H2 console and query the `authorization_decisions` table to verify that the decision was persisted.
 
 * * * * *
 
@@ -212,14 +202,6 @@ docker-compose down
     -   The request is forwarded to RabbitMQ.
 
     -   The internal authorization service processes the request and makes a decision.
-
-4.  **Callback**:
-
-    -   The result is sent to the provided callback URL.
-
-5.  **Persistence**:
-
-    -   The decision is stored in the H2 database for debugging.
 
 * * * * *
 
@@ -262,4 +244,4 @@ charging-service/
 **Contact**
 -----------
 
-For questions or feedback, please contact me at [mathewsfrj@gmail.com](https://mailto:mathewsfrj@gmail.com/).
+For questions or feedback, please contact me at [mathewsfrj@gmail.com](mailto:mathewsfrj@gmail.com).
